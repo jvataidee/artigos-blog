@@ -2,3 +2,4 @@
 fig/
 __pycache__/
 *.pyc
+.venv/

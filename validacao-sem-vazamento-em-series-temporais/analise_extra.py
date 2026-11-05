@@ -1,134 +1,131 @@
-"""Análises da auditoria: KFold só com o passado, sementes, bootstrap por blocos,
-erro por fase da cultura e coerência do talhão no cubo."""
-import warnings
+"""Comparações pareadas, sementes, sensibilidade do bootstrap e avaliação descritiva do teste."""
+import hashlib
+import json
+import platform
 from pathlib import Path
 
+import matplotlib
 import numpy as np
 import pandas as pd
+import sklearn
+from figura_cubo import load_cube
+from protocolo import (
+    SEEDS,
+    block_bootstrap_diff,
+    load_series,
+    make_features_age,
+    mase,
+    persistence,
+    run_development,
+    walk_forward,
+)
 
 HERE = Path(__file__).parent
-src = (HERE / "experimento.py").read_text(encoding="utf-8")
-src = src.split("# %% teste selado")[0]
-# não refaz figuras nem prints do experimento
-import matplotlib
-matplotlib.use("Agg")
-import contextlib, io
-with contextlib.redirect_stdout(io.StringIO()):
-    exec(compile(src, "experimento.py", "exec"))
-
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import KFold
-
-sealed = ndvi.iloc[VAL_END:]
-pers_test = persistence(ndvi, VAL_END, len(ndvi))
-
-# %% 1. KFold aleatório com linhas montadas só com o passado
-dev_rows_p = [i for i in range(len(LAGS) + 1, VAL_END) if pd.notna(ndvi.iloc[i])]
-X_dev_p = pd.concat([row_for_day(ndvi, i) for i in dev_rows_p])
-y_dev_p = ndvi.iloc[dev_rows_p]
-pred_kf_p = pd.Series(index=y_dev_p.index, dtype=float)
-for tr, te in KFold(n_splits=5, shuffle=True, random_state=42).split(X_dev_p):
-    pred_kf_p.iloc[te] = new_model().fit(X_dev_p.iloc[tr], y_dev_p.iloc[tr]).predict(X_dev_p.iloc[te])
-pred_kf_p = pred_kf_p.reindex(val.index)
-print(f"KFold aleatório, linhas só com o passado: MASE = {mase(val, pred_kf_p):.3f}")
 
 
-# %% 2a. sementes do Random Forest
-def run_all(seed):
-    global new_model
-    def new_model():
-        return RandomForestRegressor(n_estimators=300, min_samples_leaf=3, random_state=seed, n_jobs=-1)
-    out = {}
-    pk = pd.Series(index=y_dev.index, dtype=float)
-    for tr, te in KFold(n_splits=5, shuffle=True, random_state=seed).split(X_dev):
-        pk.iloc[te] = new_model().fit(X_dev.iloc[tr], y_dev.iloc[tr]).predict(X_dev.iloc[te])
-    out["kfold"] = mase(val, pk.reindex(val.index))
-    pkp = pd.Series(index=y_dev_p.index, dtype=float)
-    for tr, te in KFold(n_splits=5, shuffle=True, random_state=seed).split(X_dev_p):
-        pkp.iloc[te] = new_model().fit(X_dev_p.iloc[tr], y_dev_p.iloc[tr]).predict(X_dev_p.iloc[te])
-    out["kfold_passado"] = mase(val, pkp.reindex(val.index))
-    m = new_model().fit(X_all.iloc[train_rows], ndvi.iloc[train_rows])
-    out["pre"] = mase(val, pd.Series(m.predict(X_all.iloc[TRAIN_END:VAL_END]), index=val.index))
-    out["mix"] = mase(val, walk_forward(ndvi, TRAIN_END, VAL_END, past_only_train=False))
-    out["wf"] = mase(val, walk_forward(ndvi, TRAIN_END, VAL_END))
-    out["idade"] = mase(val, walk_forward(ndvi, TRAIN_END, VAL_END, features=make_features_age))
-    out["idade_teste"] = mase(sealed, walk_forward(ndvi, VAL_END, len(ndvi), features=make_features_age))
-    return out
+def bootstrap_rows(y, predictions, ref, scale, period):
+    rows = []
+    for block in (3, 6, 12):
+        for name, pred in predictions.items():
+            d, lo, hi, fraction = block_bootstrap_diff(y, pred, ref, scale, block=block)
+            rows.append(dict(periodo=period, modelo=name, bloco=block, diferenca=d,
+                             inferior=lo, superior=hi, proporcao_negativa=fraction))
+    return rows
 
 
-seeds = pd.DataFrame([run_all(s) for s in range(10)])
-print("\n10 sementes (mín | mediana | máx):")
-print(seeds.agg(["min", "median", "max"]).T.round(3).to_string())
-print(f"persistência: validação {mase(val, pers_val):.3f} | teste {mase(sealed, pers_test):.3f}")
+def main():
+    out = HERE / "resultados"
+    out.mkdir(exist_ok=True)
+    _, _, series = load_series(HERE / "dados" / "pixel_soja_s2.csv")
+    train_end = series.index.get_loc(pd.Timestamp("2023-01-01"))
+    val_end = series.index.get_loc(pd.Timestamp("2025-01-01"))
+    # O desenvolvimento recebe apenas o período anterior ao teste.
+    dev = series.iloc[:val_end].copy()
+    result = run_development(dev, train_end, val_end)
+    val, scale, p = result["val"], result["scale"], result["predictions"]
+    metrics = pd.DataFrame([dict(modelo=k, MASE=mase(val, v, scale)) for k, v in p.items()])
+    metrics.to_csv(out / "validacao.csv", index=False)
+    print("MASE na validação (semente 42):\n", metrics.round(3).to_string(index=False), flush=True)
 
-# restaura a semente original
-def new_model():
-    return RandomForestRegressor(n_estimators=300, min_samples_leaf=3, random_state=42, n_jobs=-1)
+    seeds = []
+    for seed in SEEDS:
+        r = run_development(dev, train_end, val_end, seed=seed)
+        seeds.append({"semente": seed, **{k: mase(val, v, scale) for k, v in r["predictions"].items()
+                                         if k not in ("persistencia", "ano_anterior")}})
+        print(f"semente de desenvolvimento concluída: {seed}", flush=True)
+    seeds = pd.DataFrame(seeds).set_index("semente")
+    seeds.to_csv(out / "sementes_validacao.csv")
+    summary = seeds.agg(["min", "median", "max"]).T
+    summary.to_csv(out / "resumo_sementes.csv", index_label="modelo")
+    print("\nSementes 0 a 9 (modelo e dobras; comparação pareada):\n", summary.round(3).to_string(), flush=True)
+
+    boot = bootstrap_rows(val, {k: p[k] for k in ("kfold", "kfold_passado", "pre", "wf", "idade")},
+                          p["persistencia"], scale, "validacao")
+    print("\nBootstrap da validação:\n", pd.DataFrame(boot).round(3).to_string(index=False), flush=True)
+    safra = val.index.month.isin([10, 11, 12, 1, 2])
+    phases = []
+    for key in ("persistencia", "pre", "wf", "idade"):
+        for label, mask in [("safra", safra), ("resto", ~safra)]:
+            phases.append(dict(modelo=key, fase=label, n=int(val[mask].notna().sum()),
+                               MASE=mase(val[mask], p[key][mask], scale)))
+    pd.DataFrame(phases).to_csv(out / "fases.csv", index=False)
+    print("\nFases:\n", pd.DataFrame(phases).round(3).to_string(index=False), flush=True)
+
+    grid, cube = load_cube(until="2025-01-01")
+    center = cube[:, 16, 16]
+    corr = np.full((32, 32), np.nan)
+    for r in range(32):
+        for c in range(32):
+            s = cube[:, r, c]
+            ok = np.isfinite(s) & np.isfinite(center)
+            if ok.sum() > 30 and np.std(s[ok]) > 0 and np.std(center[ok]) > 0:
+                corr[r, c] = np.corrcoef(s[ok], center[ok])[0, 1]
+    cube_stats = {"periodo": "2019 a 2024", "decendios": len(grid),
+                  "pixels_com_correlacao": int(np.isfinite(corr).sum()),
+                  "mediana": float(np.nanmedian(corr)),
+                  "fracao_1024_acima_09": float(np.mean(corr > 0.9))}
+    print("\nCubo até 2024:", cube_stats, flush=True)
+
+    selected = min(("persistencia", "wf", "idade"), key=lambda key: mase(val, p[key], scale))
+    print("\nDecisão anterior ao teste:", selected, flush=True)
+    # A partir daqui 2025 é usado apenas para relatar o desempenho, sem rever a seleção.
+    sealed = series.iloc[val_end:]
+    ref = persistence(series, val_end, len(series))
+    pred_test = walk_forward(series, val_end, len(series), features=make_features_age)
+    boot.extend(bootstrap_rows(sealed, {"idade": pred_test}, ref, scale, "teste_descritivo"))
+    pd.DataFrame(boot).to_csv(out / "bootstrap.csv", index=False)
+    test_seeds = pd.DataFrame([dict(semente=seed, MASE=mase(sealed,
+        walk_forward(series, val_end, len(series), features=make_features_age, seed=seed), scale))
+        for seed in SEEDS])
+    test_seeds.to_csv(out / "sementes_teste_descritivo.csv", index=False)
+    test_metrics = {"persistencia": float(mase(sealed, ref, scale)),
+                    "idade": float(mase(sealed, pred_test, scale))}
+    print("\nTeste descritivo:", test_metrics)
+    print(pd.DataFrame(boot).query("periodo == 'teste_descritivo'").round(3).to_string(index=False))
+
+    # Conferência estrutural: valores e máscara de 2025 não podem alterar o desenvolvimento.
+    altered = series.copy()
+    altered.iloc[val_end:] = 99.0
+    check = run_development(altered, train_end, val_end)
+    for key in p:
+        np.testing.assert_allclose(p[key], check["predictions"][key], atol=1e-12, rtol=0, equal_nan=True)
+    assert scale == check["scale"]
+    provenance = {"python": platform.python_version(), "numpy": np.__version__,
+                  "pandas": pd.__version__, "scikit_learn": sklearn.__version__,
+                  "matplotlib": matplotlib.__version__,
+                  "semente_principal": 42, "sementes_sensibilidade": list(SEEDS),
+                  "blocos": [3, 6, 12], "reamostragens": 5000, "semente_bootstrap": 0,
+                  "escala_treino": float(scale), "selecionado": selected,
+                  "teste_descritivo": test_metrics, "cubo": cube_stats,
+                  "invariancia_a_2025": True, "linhas_desenvolvimento": result["dev_rows"],
+                  "linhas_treino": result["train_rows"],
+                  "sha256_codigo": {f.name: hashlib.sha256(f.read_bytes()).hexdigest()
+                                     for f in sorted(HERE.glob("*.py"))},
+                  "sha256_dados": {f.name: hashlib.sha256(f.read_bytes()).hexdigest()
+                                    for f in sorted((HERE / "dados").iterdir()) if f.is_file()}}
+    (out / "proveniencia.json").write_text(json.dumps(provenance, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print("\nConferência aprovada: alterar todo o teste não muda nenhuma previsão de desenvolvimento.")
 
 
-# %% 2b. bootstrap por blocos da diferença de MASE (modelo - persistência)
-def block_bootstrap_diff(y_true, pred, ref, block=6, n=5000, seed=0):
-    """Reamostra blocos de `block` decêndios consecutivos; devolve IC 95% de MASE(pred) - MASE(ref)."""
-    rng = np.random.default_rng(seed)
-    ok = y_true.notna().to_numpy()
-    e_m = np.abs(y_true - pred).to_numpy() / SCALE
-    e_r = np.abs(y_true - ref).to_numpy() / SCALE
-    T = len(y_true)
-    starts = np.arange(T - block + 1)
-    diffs = []
-    for _ in range(n):
-        idx = np.concatenate([np.arange(s, s + block) for s in rng.choice(starts, size=int(np.ceil(T / block)))])[:T]
-        sel = idx[ok[idx]]
-        if len(sel) == 0:
-            continue
-        diffs.append(e_m[sel].mean() - e_r[sel].mean())
-    diffs = np.array(diffs)
-    point = e_m[ok].mean() - e_r[ok].mean()
-    return point, np.percentile(diffs, 2.5), np.percentile(diffs, 97.5), (diffs < 0).mean()
-
-
-pred_test_age = walk_forward(ndvi, VAL_END, len(ndvi), features=make_features_age)
-print("\nbootstrap por blocos de 6 decêndios, diferença de MASE em relação à persistência:")
-for name, y_t, p, r in [
-    ("KFold aleatório (validação)", val, pred_kf, pers_val),
-    ("KFold só com o passado (validação)", val, pred_kf_p, pers_val),
-    ("lacunas preenchidas antes (validação)", val, pred_pre, pers_val),
-    ("treino e previsão com o passado (validação)", val, pred_wf, pers_val),
-    ("RF + idade (validação)", val, pred_age, pers_val),
-    ("RF + idade (teste)", sealed, pred_test_age, pers_test),
-]:
-    d, lo, hi, p_neg = block_bootstrap_diff(y_t, p, r)
-    print(f"  {name}: {d:+.3f}  IC95% [{lo:+.3f}; {hi:+.3f}]  P(modelo melhor) = {p_neg:.2f}")
-
-
-# %% 4. erro por fase da cultura
-def phase(idx):
-    return np.where(idx.month.isin([10, 11, 12, 1, 2]), "safra de soja (out a fev)", "resto do ano (mar a set)")
-
-
-print("\nMASE por fase na validação:")
-rows = []
-for name, p in [("persistência", pers_val), ("lacunas preenchidas antes", pred_pre),
-                ("treino e previsão com o passado", pred_wf), ("RF + idade da observação", pred_age)]:
-    for ph in ["safra de soja (out a fev)", "resto do ano (mar a set)"]:
-        m = phase(val.index) == ph
-        rows.append((name, ph, mase(val[m], p[m]), int(val[m].notna().sum())))
-tab = pd.DataFrame(rows, columns=["modelo", "fase", "MASE", "n"]).pivot(index="modelo", columns="fase", values="MASE")
-print(tab.round(3).to_string())
-print("pontos observados por fase:", {ph: int(val[phase(val.index) == ph].notna().sum())
-                                       for ph in ["safra de soja (out a fev)", "resto do ano (mar a set)"]})
-
-# %% 5. coerência do talhão no cubo
-exec((HERE / "figura_cubo.py").read_text(encoding="utf-8").split("# conferência")[0])
-center = cube[:, 16, 16]
-corr = np.full((32, 32), np.nan)
-for r_ in range(32):
-    for c_ in range(32):
-        s = cube[:, r_, c_]
-        ok = np.isfinite(s) & np.isfinite(center)
-        if ok.sum() > 30:
-            corr[r_, c_] = np.corrcoef(s[ok], center[ok])[0, 1]
-with warnings.catch_warnings():
-    warnings.simplefilter("ignore")
-    print(f"\ncubo: correlação dos 1.024 pixels com o pixel central: mediana {np.nanmedian(corr):.2f}, "
-          f"fração com r > 0,9: {np.nanmean(corr > 0.9):.2f}, fração com r > 0,8: {np.nanmean(corr > 0.8):.2f}")
+if __name__ == "__main__":
+    main()
