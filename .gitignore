@@ -1,0 +1,4 @@
+# figuras e cache gerados ao rodar os scripts
+fig/
+__pycache__/
+*.pyc
