@@ -1,0 +1,357 @@
+{
+ "w": 1600,
+ "h": 1040,
+ "title": "Funciona conforme contratado, mas não conforme o trabalho",
+ "subtitle": "Figura Rica · implantação de um sistema de informação numa organização",
+ "footer": "Desenhada em código pela skill figura-rica (Claude Opus 5.5) · só elementos do enunciado; hipóteses ficam tracejadas e com ?",
+ "items": [
+  {
+   "t": "zone",
+   "x": 30,
+   "y": 130,
+   "w": 990,
+   "h": 855,
+   "label": "a organização",
+   "color": "#5B6573"
+  },
+  {
+   "t": "icon",
+   "kind": "computer",
+   "x": 560,
+   "y": 545,
+   "s": 1.6
+  },
+  {
+   "t": "text",
+   "x": 560,
+   "y": 480,
+   "text": "NOVO\nSISTEMA",
+   "size": 26,
+   "bold": true,
+   "valign": "middle",
+   "color": "#2563A8"
+  },
+  {
+   "t": "people",
+   "x": 250,
+   "y": 280,
+   "n": 3,
+   "color": "#2563A8",
+   "label": "Gestores"
+  },
+  {
+   "t": "bubble",
+   "x": 440,
+   "y": 205,
+   "w": 240,
+   "text": "Queremos controle, padronização e visibilidade dos dados",
+   "tail": [
+    290,
+    240
+   ],
+   "color": "#2563A8"
+  },
+  {
+   "t": "icon",
+   "kind": "chart",
+   "x": 660,
+   "y": 255,
+   "label": "indicadores inconsistentes",
+   "labelDy": -62,
+   "labelColor": "#C0392B",
+   "labelW": 160
+  },
+  {
+   "t": "cloud",
+   "x": 850,
+   "y": 245,
+   "w": 240,
+   "h": 85,
+   "text": "baixa confiança nos dados",
+   "size": 19
+  },
+  {
+   "t": "people",
+   "x": 870,
+   "y": 565,
+   "n": 2,
+   "color": "#1E7A8C",
+   "label": "Equipe de TI"
+  },
+  {
+   "t": "bubble",
+   "x": 885,
+   "y": 700,
+   "w": 230,
+   "text": "Pressionados entre usuários, gestão e fornecedor",
+   "tail": [
+    870,
+    642
+   ],
+   "color": "#1E7A8C"
+  },
+  {
+   "t": "icon",
+   "kind": "oldpc",
+   "x": 700,
+   "y": 735,
+   "label": "sistemas legados",
+   "labelDy": 50
+  },
+  {
+   "t": "people",
+   "x": 1110,
+   "y": 545,
+   "n": 1,
+   "color": "#5B6573",
+   "label": "Fornecedor do sistema",
+   "labelW": 150
+  },
+  {
+   "t": "bubble",
+   "x": 1100,
+   "y": 400,
+   "w": 175,
+   "text": "O sistema funciona conforme contratado",
+   "tail": [
+    1105,
+    480
+   ],
+   "color": "#5B6573"
+  },
+  {
+   "t": "people",
+   "x": 255,
+   "y": 810,
+   "n": 3,
+   "color": "#E8601C",
+   "label": "Usuários operacionais"
+  },
+  {
+   "t": "bubble",
+   "x": 500,
+   "y": 925,
+   "w": 300,
+   "text": "Difícil de usar, perdemos autonomia, mais burocracia, nenhum treinamento, e não reflete nossa rotina",
+   "tail": [
+    330,
+    852
+   ],
+   "color": "#E8601C"
+  },
+  {
+   "t": "icon",
+   "kind": "sheet",
+   "x": 80,
+   "y": 690,
+   "label": "planilhas paralelas",
+   "labelDy": 52,
+   "labelW": 110
+  },
+  {
+   "t": "icon",
+   "kind": "note",
+   "x": 80,
+   "y": 860,
+   "label": "registros manuais",
+   "labelDy": 50,
+   "labelW": 110
+  },
+  {
+   "t": "people",
+   "x": 735,
+   "y": 900,
+   "n": 2,
+   "color": "#5B6573",
+   "label": "Setores internos"
+  },
+  {
+   "t": "people",
+   "x": 925,
+   "y": 900,
+   "n": 2,
+   "color": "#5B6573",
+   "label": "Clientes internos"
+  },
+  {
+   "t": "cloud",
+   "x": 430,
+   "y": 650,
+   "w": 230,
+   "h": 80,
+   "text": "retrabalho e duplicidade de registros",
+   "size": 18
+  },
+  {
+   "t": "link",
+   "kind": "fact",
+   "from": [
+    300,
+    300
+   ],
+   "to": [
+    820,
+    520
+   ],
+   "curve": -70,
+   "label": "cobranças",
+   "labelAt": [
+    750,
+    395
+   ]
+  },
+  {
+   "t": "link",
+   "kind": "fact",
+   "from": [
+    305,
+    785
+   ],
+   "to": [
+    815,
+    620
+   ],
+   "curve": 30,
+   "label": "demandas",
+   "labelAt": [
+    610,
+    690
+   ]
+  },
+  {
+   "t": "link",
+   "kind": "fact",
+   "from": [
+    1075,
+    555
+   ],
+   "to": [
+    915,
+    560
+   ],
+   "curve": 0,
+   "label": "limitações",
+   "labelAt": [
+    995,
+    600
+   ]
+  },
+  {
+   "t": "link",
+   "kind": "fact",
+   "from": [
+    205,
+    790
+   ],
+   "to": [
+    125,
+    735
+   ],
+   "curve": 0
+  },
+  {
+   "t": "link",
+   "kind": "fact",
+   "from": [
+    205,
+    830
+   ],
+   "to": [
+    125,
+    850
+   ],
+   "curve": 0
+  },
+  {
+   "t": "link",
+   "kind": "fact",
+   "from": [
+    585,
+    425
+   ],
+   "to": [
+    640,
+    292
+   ],
+   "curve": 0
+  },
+  {
+   "t": "link",
+   "kind": "conflict",
+   "from": [
+    250,
+    340
+   ],
+   "to": [
+    250,
+    735
+   ],
+   "zig": 13,
+   "label": "controle × autonomia",
+   "labelW": 110,
+   "labelAt": [
+    165,
+    470
+   ]
+  },
+  {
+   "t": "link",
+   "kind": "conflict",
+   "from": [
+    1010,
+    405
+   ],
+   "to": [
+    665,
+    445
+   ],
+   "zig": 11,
+   "label": "contratado × práticas reais",
+   "labelW": 130,
+   "labelAt": [
+    835,
+    380
+   ]
+  },
+  {
+   "t": "link",
+   "kind": "hyp",
+   "from": [
+    130,
+    655
+   ],
+   "to": [
+    458,
+    485
+   ],
+   "curve": -30,
+   "label": "duplicidade alimenta os indicadores",
+   "labelW": 130,
+   "labelAt": [
+    385,
+    548
+   ]
+  }
+ ],
+ "panel": {
+  "x": 1205,
+  "y": 120,
+  "w": 370,
+  "h": 575,
+  "title": "Para validar com o grupo",
+  "next": "Quem participou da definição de como o sistema deveria funcionar antes de ele ser contratado?",
+  "items": [
+   "Há quanto tempo o sistema está em uso?",
+   "Houve treinamento? Para quem?",
+   "Quais setores internos são os mais afetados?",
+   "Quem pode mudar o contrato ou o escopo?",
+   "As planilhas são resistência ou a forma de a rotina continuar funcionando?",
+   "Os clientes internos sentem a baixa confiança nos dados?"
+  ]
+ },
+ "legend": {
+  "x": 1205,
+  "y": 720,
+  "w": 370
+ }
+}

@@ -1,0 +1,471 @@
+{
+ "w": 1600,
+ "h": 1040,
+ "title": "Quem decide sobre a água, a terra e a preservação?",
+ "subtitle": "Figura Rica · conflito socioambiental numa região rural",
+ "footer": "Desenhada em código pela skill figura-rica (Claude Opus 5.5) · só elementos do enunciado; hipóteses ficam tracejadas e com ?",
+ "items": [
+  {
+   "t": "river",
+   "pts": [
+    [
+     560,
+     125
+    ],
+    [
+     600,
+     250
+    ],
+    [
+     570,
+     400
+    ],
+    [
+     610,
+     560
+    ],
+    [
+     585,
+     700
+    ],
+    [
+     650,
+     850
+    ],
+    [
+     635,
+     1000
+    ]
+   ]
+  },
+  {
+   "t": "icon",
+   "kind": "tree",
+   "x": 455,
+   "y": 710,
+   "s": 1
+  },
+  {
+   "t": "icon",
+   "kind": "tree",
+   "x": 735,
+   "y": 690,
+   "s": 1.1
+  },
+  {
+   "t": "icon",
+   "kind": "tree",
+   "x": 790,
+   "y": 650,
+   "s": 0.85
+  },
+  {
+   "t": "text",
+   "x": 760,
+   "y": 745,
+   "text": "áreas de preservação",
+   "size": 19,
+   "color": "#5A8F29"
+  },
+  {
+   "t": "box",
+   "x": 600,
+   "y": 500,
+   "w": 340,
+   "h": 120,
+   "text": "ÁGUA · TERRA · PRESERVAÇÃO\nquem decide?",
+   "size": 27,
+   "fillStyle": "solid"
+  },
+  {
+   "t": "icon",
+   "kind": "house",
+   "x": 70,
+   "y": 215,
+   "s": 0.9
+  },
+  {
+   "t": "icon",
+   "kind": "house",
+   "x": 130,
+   "y": 200,
+   "s": 0.9
+  },
+  {
+   "t": "people",
+   "x": 150,
+   "y": 320,
+   "n": 3,
+   "color": "#5A8F29",
+   "label": "Comunidades locais"
+  },
+  {
+   "t": "bubble",
+   "x": 345,
+   "y": 235,
+   "w": 240,
+   "text": "Dependemos dos recursos para viver e manter nosso modo de vida",
+   "tail": [
+    205,
+    285
+   ],
+   "color": "#5A8F29"
+  },
+  {
+   "t": "people",
+   "x": 150,
+   "y": 625,
+   "n": 2,
+   "color": "#3F7D3A",
+   "label": "Agricultores familiares"
+  },
+  {
+   "t": "bubble",
+   "x": 345,
+   "y": 585,
+   "w": 210,
+   "text": "Queremos acesso à água e apoio técnico",
+   "tail": [
+    190,
+    600
+   ],
+   "color": "#3F7D3A"
+  },
+  {
+   "t": "people",
+   "x": 125,
+   "y": 890,
+   "n": 1,
+   "color": "#2563A8",
+   "label": "Órgãos ambientais"
+  },
+  {
+   "t": "icon",
+   "kind": "magnifier",
+   "x": 185,
+   "y": 858
+  },
+  {
+   "t": "bubble",
+   "x": 200,
+   "y": 775,
+   "w": 280,
+   "text": "Fiscalizamos áreas sensíveis, mas faltam equipe, orçamento e apoio político",
+   "tail": [
+    135,
+    838
+   ],
+   "color": "#2563A8"
+  },
+  {
+   "t": "icon",
+   "kind": "flag",
+   "x": 440,
+   "y": 885,
+   "s": 0.9
+  },
+  {
+   "t": "people",
+   "x": 525,
+   "y": 900,
+   "n": 3,
+   "color": "#3F7D3A",
+   "label": "ONGs"
+  },
+  {
+   "t": "bubble",
+   "x": 470,
+   "y": 790,
+   "w": 210,
+   "text": "Conservação e direitos comunitários",
+   "tail": [
+    515,
+    845
+   ],
+   "color": "#3F7D3A"
+  },
+  {
+   "t": "people",
+   "x": 950,
+   "y": 900,
+   "n": 1,
+   "color": "#1E7A8C",
+   "label": "Pesquisadores"
+  },
+  {
+   "t": "icon",
+   "kind": "chart",
+   "x": 1045,
+   "y": 878
+  },
+  {
+   "t": "bubble",
+   "x": 900,
+   "y": 785,
+   "w": 250,
+   "text": "Produzimos dados técnicos, mas nem todos nos ouvem",
+   "tail": [
+    945,
+    842
+   ],
+   "color": "#1E7A8C"
+  },
+  {
+   "t": "icon",
+   "kind": "townhall",
+   "x": 790,
+   "y": 235,
+   "label": "Governo municipal",
+   "labelDy": 48,
+   "labelBold": true
+  },
+  {
+   "t": "cloud",
+   "x": 800,
+   "y": 375,
+   "w": 320,
+   "h": 100,
+   "text": "pressão por desenvolvimento, empregos e arrecadação",
+   "size": 19
+  },
+  {
+   "t": "icon",
+   "kind": "field",
+   "x": 1065,
+   "y": 170,
+   "s": 0.9
+  },
+  {
+   "t": "people",
+   "x": 1065,
+   "y": 300,
+   "n": 2,
+   "color": "#E8601C",
+   "label": "Grandes produtores"
+  },
+  {
+   "t": "bubble",
+   "x": 1055,
+   "y": 425,
+   "w": 230,
+   "text": "Expandir a produção e flexibilizar as regras ambientais",
+   "tail": [
+    1065,
+    360
+   ],
+   "color": "#E8601C"
+  },
+  {
+   "t": "icon",
+   "kind": "factory",
+   "x": 1080,
+   "y": 630,
+   "label": "Empresas",
+   "labelDy": 42,
+   "labelBold": true
+  },
+  {
+   "t": "bubble",
+   "x": 1005,
+   "y": 728,
+   "w": 185,
+   "text": "Interesse econômico na região",
+   "tail": [
+    1030,
+    622
+   ],
+   "color": "#5B6573"
+  },
+  {
+   "t": "cloud",
+   "x": 770,
+   "y": 950,
+   "w": 220,
+   "h": 80,
+   "text": "incerteza sobre impactos futuros",
+   "size": 18
+  },
+  {
+   "t": "cloud",
+   "x": 300,
+   "y": 458,
+   "w": 230,
+   "h": 80,
+   "text": "desconfiança e comunicação falha",
+   "size": 18
+  },
+  {
+   "t": "link",
+   "kind": "fact",
+   "from": [
+    230,
+    300
+   ],
+   "to": [
+    440,
+    445
+   ],
+   "curve": -35
+  },
+  {
+   "t": "link",
+   "kind": "fact",
+   "from": [
+    215,
+    630
+   ],
+   "to": [
+    430,
+    535
+   ],
+   "curve": 10
+  },
+  {
+   "t": "link",
+   "kind": "fact",
+   "from": [
+    945,
+    455
+   ],
+   "to": [
+    775,
+    485
+   ],
+   "curve": 0
+  },
+  {
+   "t": "link",
+   "kind": "fact",
+   "from": [
+    190,
+    845
+   ],
+   "to": [
+    470,
+    565
+   ],
+   "curve": 30,
+   "label": "fiscalização",
+   "labelAt": [
+    355,
+    690
+   ]
+  },
+  {
+   "t": "link",
+   "kind": "fact",
+   "from": [
+    925,
+    850
+   ],
+   "to": [
+    700,
+    565
+   ],
+   "curve": -20,
+   "label": "dados técnicos",
+   "labelAt": [
+    845,
+    720
+   ]
+  },
+  {
+   "t": "link",
+   "kind": "conflict",
+   "from": [
+    960,
+    475
+   ],
+   "to": [
+    800,
+    605
+   ],
+   "label": "expansão × preservação",
+   "labelW": 130,
+   "labelAt": [
+    905,
+    560
+   ]
+  },
+  {
+   "t": "link",
+   "kind": "hyp",
+   "from": [
+    1100,
+    578
+   ],
+   "to": [
+    1100,
+    478
+   ],
+   "curve": 0,
+   "label": "mesmo lado",
+   "labelW": 90,
+   "labelAt": [
+    1155,
+    528
+   ]
+  },
+  {
+   "t": "link",
+   "kind": "hyp",
+   "from": [
+    1005,
+    250
+   ],
+   "to": [
+    870,
+    230
+   ],
+   "curve": 25,
+   "label": "pressionam juntos",
+   "labelW": 110,
+   "labelAt": [
+    935,
+    205
+   ]
+  },
+  {
+   "t": "link",
+   "kind": "hyp",
+   "from": [
+    95,
+    385
+   ],
+   "to": [
+    95,
+    560
+   ],
+   "curve": 25,
+   "noHead": true,
+   "both": false,
+   "label": "mesmos interesses",
+   "labelW": 100,
+   "labelAt": [
+    60,
+    470
+   ]
+  }
+ ],
+ "panel": {
+  "x": 1205,
+  "y": 120,
+  "w": 370,
+  "h": 575,
+  "title": "Para validar com o grupo",
+  "next": "Onde, de fato, são tomadas as decisões sobre o uso da água e da terra, e quem tem assento nesse espaço?",
+  "items": [
+   "De onde vem a água em disputa e qual uso é mais crítico?",
+   "Quem, especificamente, não ouve os pesquisadores?",
+   "As empresas já atuam na região ou só demonstram interesse?",
+   "Que impactos futuros mais preocupam cada grupo?",
+   "Grandes produtores e empresas atuam juntos?",
+   "Comunidades e agricultores familiares têm os mesmos interesses?"
+  ]
+ },
+ "legend": {
+  "x": 1205,
+  "y": 720,
+  "w": 370
+ }
+}
