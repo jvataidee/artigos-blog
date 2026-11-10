@@ -1,0 +1,34 @@
+{
+  "catalogo": "https://planetarycomputer.microsoft.com/api/stac/v1",
+  "colecao": "sentinel-2-l2a",
+  "bbox": [
+    -35.02,
+    -8.15,
+    -34.86,
+    -7.95
+  ],
+  "periodo": "2025-01-01/2025-12-31",
+  "cenas_total": 202,
+  "cenas_nuvens_lt20": 7,
+  "datas_total": 100,
+  "cenas_por_limite_nuvens": {
+    "lt20": 7,
+    "lt40": 48,
+    "lt60": 117,
+    "lt80": 161
+  },
+  "tiles": [
+    "25LBL",
+    "25MBM"
+  ],
+  "datas_lt20": [
+    "2025-03-22",
+    "2025-03-24",
+    "2025-04-16",
+    "2025-04-16",
+    "2025-11-07",
+    "2025-11-07",
+    "2025-11-12"
+  ],
+  "segundos_duas_buscas": 5.9
+}
