@@ -1,0 +1,8 @@
+requests
+pandas
+numpy
+h3
+folium
+matplotlib
+scikit-learn
+sentence-transformers

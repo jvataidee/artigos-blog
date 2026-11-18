@@ -1,0 +1,10 @@
+h3
+folium
+networkx
+tqdm
+scikit-learn
+pandas
+numpy
+matplotlib
+requests
+openai
