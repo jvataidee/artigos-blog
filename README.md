@@ -1,0 +1,21 @@
+# artigos-blog
+
+Dados e código dos artigos do blog [joaoataide.com](https://www.joaoataide.com/blog/). Cada pasta corresponde a um artigo e tem o seu próprio README com os arquivos e a forma de rodar.
+
+| Pasta | Artigo |
+|---|---|
+| [validacao-sem-vazamento-em-series-temporais](validacao-sem-vazamento-em-series-temporais/) | [Validação sem vazamento em séries temporais: um pixel de soja do Sentinel-2, walk-forward e teste selado](https://www.joaoataide.com/blog/validacao-sem-vazamento-em-series-temporais/) |
+| [desenhista-de-figura-rica](desenhista-de-figura-rica/) | [Desenhista de Figura Rica: um agente de IA para desenhar e entender problemas complexos](https://www.joaoataide.com/blog/desenhista-de-figura-rica-agente-de-ia-para-entender-problemas-complexos/) |
+| [stac-cog-e-zarr-imagens-de-satelite-na-nuvem](stac-cog-e-zarr-imagens-de-satelite-na-nuvem/) | [STAC, COG e Zarr: como buscar imagens de satélite na nuvem sem baixar terabytes](https://www.joaoataide.com/blog/stac-cog-e-zarr-imagens-de-satelite-na-nuvem/) |
+| [airbnb-toronto-2026](airbnb-toronto-2026/) | [Análise de dados do Airbnb em Toronto: preços por bairro, um modelo de preço e a divisão por blocos espaciais (setembro de 2026)](https://www.joaoataide.com/blog/analise-de-dados-do-airbnb-toronto-canada/) |
+| [boi-gordo-ciclo-pecuario-2026](boi-gordo-ciclo-pecuario-2026/) | [Boi gordo, abate de fêmeas e ciclo pecuário: o que 29 anos de dados abertos mostram](https://www.joaoataide.com/blog/analise-financeira-para-pecuaria-de-corte/) |
+| [carga-caminhao-algoritmo-genetico](carga-caminhao-algoritmo-genetico/) | [Carga de caminhão com algoritmo genético: 500 encomendas reais, caixas em 3D e a ordem que decide quanto cabe](https://www.joaoataide.com/blog/otimizacao-de-cargas-com-algoritmo-genetico/) |
+| [cleanvision-imagens-de-radar](cleanvision-imagens-de-radar/) | [CleanVision em imagens de radar: quais recortes não deveriam treinar o modelo](https://www.joaoataide.com/blog/cleanvision-uma-ferramenta-essencial-para-limpeza-de-dados-de-imagem/) |
+| [dengue-previsao-de-casos-2026](dengue-previsao-de-casos-2026/) | [Prever casos de dengue com o Prophet, ARIMA e ETS: 10 capitais, 4 semanas à frente](https://www.joaoataide.com/blog/previsao-de-series-temporais-com-o-prophet/) |
+| [deteccao-de-fraudes-em-cartoes](deteccao-de-fraudes-em-cartoes/) | [Detecção de fraudes em cartões de crédito: janelas de tempo, orçamento de alertas e valor da transação](https://www.joaoataide.com/blog/deteccao-de-fraudes-em-cartoes-de-credito/) |
+| [estimando-tempo-de-projetos-de-deep-learning-markov](estimando-tempo-de-projetos-de-deep-learning-markov/) | [Estimando o prazo de projetos de deep learning com cadeias de Markov: cálculo exato, simulação e cenários](https://www.joaoataide.com/blog/estimando-tempo-de-projetos-de-deep-learning-usando-simulacao-e-cadeias-de-markov/) |
+| [evasao-de-clientes-telecom](evasao-de-clientes-telecom/) | [Predição de evasão de clientes de telecomunicações: teste lacrado, pipeline sem vazamento e cinco modelos que empatam](https://www.joaoataide.com/blog/predicao-de-evasao-de-clientes-em-empresas-de-telecomunicacoes/) |
+| [otimizacao-de-hiperparametros-hpo](otimizacao-de-hiperparametros-hpo/) | [Algoritmo genético, busca aleatória, TPE e CMA-ES: qual método acha melhores hiperparâmetros](https://www.joaoataide.com/blog/algoritmo-genetico-busca-aleatoria-tpe-e-cma-es-qual-metodo-acha-melhores-hiperparametros/) |
+| [radar-mstar-t72-arcgis](radar-mstar-t72-arcgis/) | [Classificando variantes do tanque T-72 em imagens de radar: MSTAR, ResNet18 e ArcGIS Pro](https://www.joaoataide.com/blog/classificando-imagens-de-radar-de-variacoes-do-tanque-t72/) |
+| [risco-de-credito-inadimplencia](risco-de-credito-inadimplencia/) | [Avaliação de risco de crédito: validação repetida, variáveis derivadas e corte pelo custo do calote](https://www.joaoataide.com/blog/avaliacao-de-risco-de-credito/) |
+| [violencia-no-rio-isp-2026](violencia-no-rio-isp-2026/) | [Análise da violência no estado do Rio de Janeiro: 12 anos de dados do ISP-RJ, sazonalidade e previsão com ARIMA, ETS e Prophet](https://www.joaoataide.com/blog/analise-da-violencia-no-rio-de-janeiro/) |

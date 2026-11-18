@@ -1,0 +1,4 @@
+autohybts[stats]==1.0.0rc5
+pandas>=2.0
+numpy>=1.26
+statsmodels>=0.14

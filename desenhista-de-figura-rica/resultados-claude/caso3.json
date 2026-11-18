@@ -1,0 +1,313 @@
+{
+ "w": 1600,
+ "h": 1040,
+ "title": "Por que os alunos não chegam ao fim do curso?",
+ "subtitle": "Figura Rica · evasão numa instituição pública de ensino técnico",
+ "footer": "Desenhada em código pela skill figura-rica (Claude Opus 5.5) · só elementos do enunciado; hipóteses ficam tracejadas e com ?",
+ "items": [
+  {
+   "t": "icon",
+   "kind": "school",
+   "x": 580,
+   "y": 470,
+   "s": 1.25,
+   "label": "Instituição pública de ensino técnico",
+   "labelDy": 50,
+   "labelBold": true,
+   "labelW": 260
+  },
+  {
+   "t": "icon",
+   "kind": "townhall",
+   "x": 170,
+   "y": 235,
+   "label": "Governo",
+   "labelDy": 48,
+   "labelBold": true
+  },
+  {
+   "t": "icon",
+   "kind": "factory",
+   "x": 990,
+   "y": 235,
+   "label": "Empresas parceiras",
+   "labelDy": 42,
+   "labelBold": true
+  },
+  {
+   "t": "bubble",
+   "x": 1122,
+   "y": 372,
+   "w": 160,
+   "text": "Esperamos profissionais qualificados",
+   "tail": [
+    1100,
+    298
+   ],
+   "color": "#5B6573"
+  },
+  {
+   "t": "cloud",
+   "x": 585,
+   "y": 190,
+   "w": 360,
+   "h": 105,
+   "text": "atendimento inadequado, comunicação falha, sem acompanhamento sistemático",
+   "size": 18
+  },
+  {
+   "t": "people",
+   "x": 860,
+   "y": 475,
+   "n": 2,
+   "color": "#2563A8",
+   "label": "Gestão e direção"
+  },
+  {
+   "t": "bubble",
+   "x": 880,
+   "y": 372,
+   "w": 235,
+   "text": "Temos metas, mas não dados confiáveis sobre as causas",
+   "tail": [
+    860,
+    418
+   ],
+   "color": "#2563A8"
+  },
+  {
+   "t": "box",
+   "x": 1080,
+   "y": 565,
+   "w": 210,
+   "h": 105,
+   "text": "taxa de evasão: ?\no enunciado não traz números",
+   "size": 20,
+   "fill": "#F4F5F7",
+   "fillStyle": "solid",
+   "color": "#5B6573"
+  },
+  {
+   "t": "people",
+   "x": 215,
+   "y": 560,
+   "n": 3,
+   "color": "#E8601C",
+   "label": "Estudantes"
+  },
+  {
+   "t": "bubble",
+   "x": 230,
+   "y": 418,
+   "w": 270,
+   "text": "Trabalho e estudo não cabem juntos, falta dinheiro, aulas pouco atrativas, difícil acompanhar",
+   "tail": [
+    215,
+    500
+   ],
+   "color": "#E8601C"
+  },
+  {
+   "t": "people",
+   "x": 365,
+   "y": 545,
+   "n": 2,
+   "color": "#5B6573",
+   "label": "Supervisores e equipe administrativa",
+   "labelSize": 18,
+   "labelW": 150,
+   "s": 0.85
+  },
+  {
+   "t": "icon",
+   "kind": "door",
+   "x": 75,
+   "y": 820,
+   "s": 0.85
+  },
+  {
+   "t": "people",
+   "x": 160,
+   "y": 830,
+   "n": 1,
+   "color": "#5B6573",
+   "label": "Alunos evadidos"
+  },
+  {
+   "t": "bubble",
+   "x": 330,
+   "y": 948,
+   "w": 320,
+   "text": "Mudei de horário no trabalho, fui para outro curso, não era o que eu esperava",
+   "tail": [
+    245,
+    868
+   ],
+   "color": "#5B6573"
+  },
+  {
+   "t": "people",
+   "x": 600,
+   "y": 820,
+   "n": 2,
+   "color": "#3F7D3A",
+   "label": "Professores"
+  },
+  {
+   "t": "bubble",
+   "x": 805,
+   "y": 785,
+   "w": 200,
+   "text": "Falta interesse e formação básica",
+   "tail": [
+    650,
+    790
+   ],
+   "color": "#3F7D3A"
+  },
+  {
+   "t": "people",
+   "x": 935,
+   "y": 880,
+   "n": 1,
+   "color": "#1E7A8C",
+   "label": "Coordenação pedagógica",
+   "labelW": 140
+  },
+  {
+   "t": "bubble",
+   "x": 1090,
+   "y": 790,
+   "w": 195,
+   "text": "Tentamos acompanhar, mas falta tempo, equipe e recursos",
+   "tail": [
+    965,
+    845
+   ],
+   "color": "#1E7A8C"
+  },
+  {
+   "t": "people",
+   "x": 1105,
+   "y": 925,
+   "n": 2,
+   "color": "#5B6573",
+   "label": "Famílias e comunidade",
+   "labelSize": 18,
+   "s": 0.8
+  },
+  {
+   "t": "link",
+   "kind": "fact",
+   "from": [
+    240,
+    250
+   ],
+   "to": [
+    800,
+    445
+   ],
+   "curve": -60,
+   "label": "mais matrículas e eficiência",
+   "labelW": 150,
+   "labelAt": [
+    380,
+    280
+   ]
+  },
+  {
+   "t": "link",
+   "kind": "fact",
+   "from": [
+    205,
+    625
+   ],
+   "to": [
+    170,
+    770
+   ],
+   "curve": 0,
+   "label": "abandonam",
+   "labelAt": [
+    120,
+    700
+   ]
+  },
+  {
+   "t": "link",
+   "kind": "conflict",
+   "from": [
+    275,
+    610
+   ],
+   "to": [
+    545,
+    790
+   ],
+   "zig": 11,
+   "label": "explicações que não se encontram",
+   "labelW": 120,
+   "labelAt": [
+    330,
+    730
+   ]
+  },
+  {
+   "t": "link",
+   "kind": "conflict",
+   "from": [
+    660,
+    860
+   ],
+   "to": [
+    890,
+    880
+   ],
+   "zig": 7,
+   "label": "pouca integração",
+   "labelAt": [
+    775,
+    910
+   ]
+  },
+  {
+   "t": "link",
+   "kind": "hyp",
+   "from": [
+    765,
+    210
+   ],
+   "to": [
+    1050,
+    510
+   ],
+   "curve": -110,
+   "label": "falta de acompanhamento explica a falta de dados",
+   "labelW": 175,
+   "labelAt": [
+    1018,
+    462
+   ]
+  }
+ ],
+ "panel": {
+  "x": 1205,
+  "y": 120,
+  "w": 370,
+  "h": 575,
+  "title": "Para validar com o grupo",
+  "next": "Hoje, quando um aluno deixa de vir, quem fica sabendo primeiro e o que acontece depois?",
+  "items": [
+   "Qual é a taxa de evasão, e em quais cursos e turnos ela é maior?",
+   "Existe registro dos motivos de saída?",
+   "O que as famílias e a comunidade local esperam da instituição?",
+   "A meta de matrícula compete com a atenção à permanência?",
+   "A falta de acompanhamento explica a falta de dados confiáveis?"
+  ]
+ },
+ "legend": {
+  "x": 1205,
+  "y": 720,
+  "w": 370
+ }
+}

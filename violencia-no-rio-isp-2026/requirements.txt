@@ -1,0 +1,5 @@
+prophet>=1.1
+autohybts[stats]==1.0.0rc5
+pandas>=2.0
+numpy>=1.26
+pillow>=10.0

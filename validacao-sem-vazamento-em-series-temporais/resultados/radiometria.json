@@ -1,0 +1,202 @@
+{
+  "escopo": "Uma cena por baseline; conferência amostral, sem alteração dos dados.",
+  "amostras": [
+    {
+      "data": "2019-01-04",
+      "baseline": 2.12,
+      "item": "S2A_MSIL2A_20190104T135111_R024_T21LYF_20201007T224148",
+      "metadados_produto": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/21/L/YF/2019/01/04/S2A_MSIL2A_20190104T135111_N0212_R024_T21LYF_20201007T224148.SAFE/MTD_MSIL2A.xml",
+      "quantificacao": [
+        10000.0
+      ],
+      "bandas": {
+        "B04": {
+          "dn_cog": 3032,
+          "dn_arquivado": 3032,
+          "dn_igual": true,
+          "escala_cog": 1.0,
+          "offset_cog": 0.0,
+          "offset_xml": 0.0
+        },
+        "B08": {
+          "dn_cog": 5112,
+          "dn_arquivado": 5112,
+          "dn_igual": true,
+          "escala_cog": 1.0,
+          "offset_cog": 0.0,
+          "offset_xml": 0.0
+        }
+      },
+      "status": "conferido"
+    },
+    {
+      "data": "2021-06-22",
+      "baseline": 3.0,
+      "item": "S2A_MSIL2A_20210622T135111_R024_T21LYF_20210625T035002",
+      "metadados_produto": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/21/L/YF/2021/06/22/S2A_MSIL2A_20210622T135111_N0300_R024_T21LYF_20210625T035002.SAFE/MTD_MSIL2A.xml",
+      "quantificacao": [
+        10000.0
+      ],
+      "bandas": {
+        "B04": {
+          "dn_cog": 1108,
+          "dn_arquivado": 1108,
+          "dn_igual": true,
+          "escala_cog": 1.0,
+          "offset_cog": 0.0,
+          "offset_xml": 0.0
+        },
+        "B08": {
+          "dn_cog": 1912,
+          "dn_arquivado": 1912,
+          "dn_igual": true,
+          "escala_cog": 1.0,
+          "offset_cog": 0.0,
+          "offset_xml": 0.0
+        }
+      },
+      "status": "conferido"
+    },
+    {
+      "data": "2022-01-28",
+      "baseline": 4.0,
+      "item": "S2A_MSIL2A_20220128T135111_R024_T21LYF_20220213T084933",
+      "metadados_produto": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/21/L/YF/2022/01/28/S2A_MSIL2A_20220128T135111_N0400_R024_T21LYF_20220213T084933.SAFE/MTD_MSIL2A.xml",
+      "quantificacao": [
+        10000.0
+      ],
+      "bandas": {
+        "B04": {
+          "dn_cog": 6992,
+          "dn_arquivado": 6992,
+          "dn_igual": true,
+          "escala_cog": 1.0,
+          "offset_cog": 0.0,
+          "offset_xml": -1000.0
+        },
+        "B08": {
+          "dn_cog": 7348,
+          "dn_arquivado": 7348,
+          "dn_igual": true,
+          "escala_cog": 1.0,
+          "offset_cog": 0.0,
+          "offset_xml": -1000.0
+        }
+      },
+      "status": "conferido"
+    },
+    {
+      "data": "2019-03-15",
+      "baseline": 5.0,
+      "item": "S2A_MSIL2A_20190315T135111_R024_T21LYF_20221212T121417",
+      "metadados_produto": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/21/L/YF/2019/03/15/S2A_MSIL2A_20190315T135111_N0500_R024_T21LYF_20221212T121417.SAFE/MTD_MSIL2A.xml",
+      "quantificacao": [
+        10000.0
+      ],
+      "bandas": {
+        "B04": {
+          "dn_cog": 9216,
+          "dn_arquivado": 9216,
+          "dn_igual": true,
+          "escala_cog": 1.0,
+          "offset_cog": 0.0,
+          "offset_xml": -1000.0
+        },
+        "B08": {
+          "dn_cog": 9432,
+          "dn_arquivado": 9432,
+          "dn_igual": true,
+          "escala_cog": 1.0,
+          "offset_cog": 0.0,
+          "offset_xml": -1000.0
+        }
+      },
+      "status": "conferido"
+    },
+    {
+      "data": "2023-02-17",
+      "baseline": 5.09,
+      "item": "S2B_MSIL2A_20230217T134709_R024_T21LYF_20230719T174239",
+      "metadados_produto": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/21/L/YF/2023/02/17/S2B_MSIL2A_20230217T134709_N0509_R024_T21LYF_20230719T174239.SAFE/MTD_MSIL2A.xml",
+      "quantificacao": [
+        10000.0
+      ],
+      "bandas": {
+        "B04": {
+          "dn_cog": 4692,
+          "dn_arquivado": 4692,
+          "dn_igual": true,
+          "escala_cog": 1.0,
+          "offset_cog": 0.0,
+          "offset_xml": -1000.0
+        },
+        "B08": {
+          "dn_cog": 6052,
+          "dn_arquivado": 6052,
+          "dn_igual": true,
+          "escala_cog": 1.0,
+          "offset_cog": 0.0,
+          "offset_xml": -1000.0
+        }
+      },
+      "status": "conferido"
+    },
+    {
+      "data": "2022-03-14",
+      "baseline": 5.1,
+      "item": "S2B_MSIL2A_20220314T135109_R024_T21LYF_20240529T191802",
+      "metadados_produto": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/21/L/YF/2022/03/14/S2B_MSIL2A_20220314T135109_N0510_R024_T21LYF_20240529T191802.SAFE/MTD_MSIL2A.xml",
+      "quantificacao": [
+        10000.0
+      ],
+      "bandas": {
+        "B04": {
+          "dn_cog": 3576,
+          "dn_arquivado": 3576,
+          "dn_igual": true,
+          "escala_cog": 1.0,
+          "offset_cog": 0.0,
+          "offset_xml": -1000.0
+        },
+        "B08": {
+          "dn_cog": 4372,
+          "dn_arquivado": 4372,
+          "dn_igual": true,
+          "escala_cog": 1.0,
+          "offset_cog": 0.0,
+          "offset_xml": -1000.0
+        }
+      },
+      "status": "conferido"
+    },
+    {
+      "data": "2024-03-23",
+      "baseline": 5.11,
+      "item": "S2B_MSIL2A_20240323T134709_R024_T21LYF_20240924T065729",
+      "metadados_produto": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/21/L/YF/2024/03/23/S2B_MSIL2A_20240323T134709_N0511_R024_T21LYF_20240924T065729.SAFE/MTD_MSIL2A.xml",
+      "quantificacao": [
+        10000.0
+      ],
+      "bandas": {
+        "B04": {
+          "dn_cog": 2766,
+          "dn_arquivado": 2766,
+          "dn_igual": true,
+          "escala_cog": 1.0,
+          "offset_cog": 0.0,
+          "offset_xml": -1000.0
+        },
+        "B08": {
+          "dn_cog": 3476,
+          "dn_arquivado": 3476,
+          "dn_igual": true,
+          "escala_cog": 1.0,
+          "offset_cog": 0.0,
+          "offset_xml": -1000.0
+        }
+      },
+      "status": "conferido"
+    }
+  ],
+  "todas_as_amostras_conferidas": true
+}

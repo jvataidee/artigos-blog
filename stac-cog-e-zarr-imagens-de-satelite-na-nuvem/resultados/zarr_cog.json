@@ -1,0 +1,60 @@
+{
+  "zarr": {
+    "shape": [
+      12,
+      2221,
+      1776
+    ],
+    "chunks": [
+      1,
+      512,
+      512
+    ],
+    "arquivos_chunk": 200,
+    "mb_disco": 111.9,
+    "mb_bruto": 180.6,
+    "compressores": [
+      "ZstdCodec(level=0, checksum=False)"
+    ]
+  },
+  "serie_ponto": {
+    "lonlat": [
+      -34.936,
+      -8.024
+    ],
+    "chunks_lidos": 12,
+    "chunks_total": 240,
+    "ndvi": {
+      "2025-01": null,
+      "2025-02": null,
+      "2025-03": 0.903,
+      "2025-04": 0.922,
+      "2025-05": null,
+      "2025-06": 0.911,
+      "2025-07": 0.932,
+      "2025-08": null,
+      "2025-09": 0.892,
+      "2025-10": 0.869,
+      "2025-11": 0.875,
+      "2025-12": 0.813
+    }
+  },
+  "cog_outubro": {
+    "px": [
+      1776,
+      2221
+    ],
+    "bloco": [
+      512,
+      512
+    ],
+    "overviews": [
+      2,
+      4,
+      8
+    ],
+    "compressao": "deflate",
+    "mb": 15.97,
+    "layout": "COG"
+  }
+}

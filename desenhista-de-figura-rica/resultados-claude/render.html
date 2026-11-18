@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.js"></script>
+<style>
+  html, body { margin: 0; background: #fffdf7; }
+  svg { display: block; font-family: 'Patrick Hand', 'Comic Sans MS', cursive; }
+</style>
+</head>
+<body>
+<svg id="fig" xmlns="http://www.w3.org/2000/svg"></svg>
+<script>
+const SPEC = /*SPEC*/null;
+const NS = 'http://www.w3.org/2000/svg';
+const C = { ink: '#1F2A3A', gray: '#5B6573', blue: '#2563A8', orange: '#E8601C', red: '#C0392B',
+            green: '#5A8F29', purple: '#6B4FBB', water: '#6FA8DC', water2: '#B7D4F0', paper: '#fffdf7' };
+const svg = document.getElementById('fig');
+let rc;
+
+function el(tag, attrs, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  (parent || svg).appendChild(e);
+  return e;
+}
+function add(node) { svg.appendChild(node); return node; }
+function opts(o) { return Object.assign({ roughness: 1.3, bowing: 1.2, strokeWidth: 2, stroke: C.ink, seed: 7 }, o || {}); }
+
+// texto com quebra por largura medida de verdade
+function measure(text, size) {
+  const t = el('text', { x: -9999, y: -9999, 'font-size': size });
+  t.textContent = text;
+  const w = t.getComputedTextLength();
+  t.remove();
+  return w;
+}
+function wrap(text, size, maxW) {
+  const out = [];
+  for (const para of String(text).split('\n')) {
+    let line = '';
+    for (const word of para.split(' ')) {
+      const test = line ? line + ' ' + word : word;
+      if (line && measure(test, size) > maxW) { out.push(line); line = word; } else { line = test; }
+    }
+    out.push(line);
+  }
+  return out;
+}
+function text(x, y, str, o) {
+  o = Object.assign({ size: 20, color: C.ink, anchor: 'middle', bold: false, maxW: 0, lh: 1.15 }, o || {});
+  const lines = o.maxW ? wrap(str, o.size, o.maxW) : String(str).split('\n');
+  const g = el('g', {});
+  const total = lines.length * o.size * o.lh;
+  let y0 = o.valign === 'middle' ? y - total / 2 + o.size * 0.85 : y;
+  lines.forEach((ln, i) => {
+    const t = el('text', { x, y: y0 + i * o.size * o.lh, 'font-size': o.size, fill: o.color,
+      'text-anchor': o.anchor, 'font-weight': o.bold ? 700 : 400 }, g);
+    t.textContent = ln;
+  });
+  return { lines: lines.length, height: total, width: Math.max(...lines.map(l => measure(l, o.size))) };
+}
+
+// ---------- formas ----------
+function person(x, y, color, s) {
+  s = s || 1;
+  add(rc.circle(x, y - 40 * s, 22 * s, opts({ stroke: color, fill: color, fillStyle: 'solid', strokeWidth: 1.5 })));
+  add(rc.line(x, y - 29 * s, x, y + 2 * s, opts({ stroke: color, strokeWidth: 2.5 })));
+  add(rc.line(x - 15 * s, y - 18 * s, x + 15 * s, y - 18 * s, opts({ stroke: color, strokeWidth: 2.5 })));
+  add(rc.line(x, y + 2 * s, x - 11 * s, y + 26 * s, opts({ stroke: color, strokeWidth: 2.5 })));
+  add(rc.line(x, y + 2 * s, x + 11 * s, y + 26 * s, opts({ stroke: color, strokeWidth: 2.5 })));
+}
+function people(it) {
+  const n = it.n || 1, gap = 30 * (it.s || 1);
+  for (let i = 0; i < n; i++) person(it.x - (n - 1) * gap / 2 + i * gap, it.y, it.color || C.ink, it.s);
+  if (it.label) text(it.x, it.y + 52 * (it.s || 1), it.label, { size: it.labelSize || 22, bold: true, color: it.color || C.ink, maxW: it.labelW || 220 });
+}
+function bubble(it) {
+  const size = it.size || 19, w = it.w || 240, pad = 12;
+  const lines = wrap(it.text, size, w - 2 * pad);
+  const h = lines.length * size * 1.15 + 2 * pad;
+  const x = it.x - w / 2, y = it.y - h / 2;
+  if (it.tail) {
+    const [tx, ty] = it.tail;
+    const bx = Math.max(x + 25, Math.min(x + w - 25, tx));
+    const by = ty > it.y ? y + h - 2 : y + 2;
+    add(rc.polygon([[bx - 12, by], [bx + 12, by], [tx, ty]], opts({ fill: '#ffffff', fillStyle: 'solid', strokeWidth: 1.6, stroke: it.color || C.gray })));
+  }
+  add(rc.rectangle(x, y, w, h, opts({ fill: '#ffffff', fillStyle: 'solid', strokeWidth: 1.6, stroke: it.color || C.gray, roughness: 1.1 })));
+  text(it.x, y + pad + size * 0.85, lines.join('\n'), { size, color: C.ink });
+}
+function cloud(it) {
+  const { x, y, w, h } = it;
+  const pts = [];
+  const bumps = it.bumps || 9;
+  let d = '';
+  for (let i = 0; i <= bumps; i++) {
+    const a = (i / bumps) * Math.PI * 2;
+    pts.push([x + Math.cos(a) * w / 2, y + Math.sin(a) * h / 2]);
+  }
+  d = 'M' + pts[0].join(' ');
+  for (let i = 1; i < pts.length; i++) {
+    const [px, py] = pts[i - 1], [qx, qy] = pts[i];
+    const mx = (px + qx) / 2, my = (py + qy) / 2;
+    const cx = x + (mx - x) * 1.35, cy = y + (my - y) * 1.35;
+    d += ` Q ${cx} ${cy} ${qx} ${qy}`;
+  }
+  add(rc.path(d, opts({ fill: it.fill || '#E9ECF1', fillStyle: 'solid', stroke: it.color || C.gray, strokeWidth: 1.6, roughness: 1.4 })));
+  text(x, y, it.text, { size: it.size || 19, color: it.textColor || C.ink, maxW: w * 0.78, valign: 'middle' });
+}
+function box(it) {
+  add(rc.rectangle(it.x - it.w / 2, it.y - it.h / 2, it.w, it.h, opts({ fill: it.fill || '#FEF1E4', fillStyle: it.fillStyle || 'hachure', hachureGap: 7, fillWeight: 1.2, stroke: it.color || C.orange, strokeWidth: 2.5 })));
+  text(it.x, it.y, it.text, { size: it.size || 28, bold: true, color: it.textColor || C.ink, maxW: it.w - 30, valign: 'middle' });
+}
+function zone(it) {
+  add(rc.rectangle(it.x, it.y, it.w, it.h, opts({ stroke: it.color || C.gray, strokeWidth: 1.6, strokeLineDash: [12, 9], roughness: 0.8 })));
+  if (it.label) text(it.x + 14, it.y + 28, it.label, { size: 20, anchor: 'start', color: it.color || C.gray, bold: true });
+}
+function river(it) {
+  add(rc.curve(it.pts, opts({ stroke: C.water, strokeWidth: it.width || 26, roughness: 0.6 })));
+  add(rc.curve(it.pts, opts({ stroke: C.water2, strokeWidth: (it.width || 26) / 3, roughness: 0.6 })));
+}
+function icon(it) {
+  const { x, y } = it, s = it.s || 1;
+  const o = (more) => opts(Object.assign({ strokeWidth: 1.8 }, more));
+  switch (it.kind) {
+    case 'house':
+      add(rc.rectangle(x - 22 * s, y - 20 * s, 44 * s, 32 * s, o({ fill: '#F4E3C3', fillStyle: 'solid' })));
+      add(rc.polygon([[x - 28 * s, y - 20 * s], [x, y - 44 * s], [x + 28 * s, y - 20 * s]], o({ fill: '#C0392B', fillStyle: 'hachure', hachureGap: 5 })));
+      add(rc.rectangle(x - 6 * s, y - 2 * s, 12 * s, 14 * s, o({ fill: '#8a5a2b', fillStyle: 'solid' })));
+      break;
+    case 'tree':
+      add(rc.line(x, y, x, y - 26 * s, o({ stroke: '#8a5a2b', strokeWidth: 3 })));
+      add(rc.circle(x, y - 40 * s, 38 * s, o({ fill: '#7FB069', fillStyle: 'solid', stroke: C.green })));
+      break;
+    case 'factory':
+      add(rc.rectangle(x - 40 * s, y - 30 * s, 80 * s, 42 * s, o({ fill: '#D5DAE1', fillStyle: 'solid' })));
+      add(rc.rectangle(x + 14 * s, y - 62 * s, 12 * s, 32 * s, o({ fill: '#AEB6C1', fillStyle: 'solid' })));
+      add(rc.rectangle(x - 22 * s, y - 52 * s, 12 * s, 22 * s, o({ fill: '#AEB6C1', fillStyle: 'solid' })));
+      add(rc.ellipse(x + 28 * s, y - 76 * s, 30 * s, 16 * s, o({ fill: '#E9ECF1', fillStyle: 'solid', stroke: C.gray })));
+      add(rc.rectangle(x - 30 * s, y - 18 * s, 14 * s, 12 * s, o({ fill: '#ffffff', fillStyle: 'solid' })));
+      add(rc.rectangle(x - 6 * s, y - 18 * s, 14 * s, 12 * s, o({ fill: '#ffffff', fillStyle: 'solid' })));
+      break;
+    case 'field':
+      for (let i = 0; i < 4; i++) add(rc.line(x - 50 * s, y - 10 * s + i * 9 * s, x + 50 * s, y - 16 * s + i * 9 * s, o({ stroke: '#B8860B', strokeWidth: 2 })));
+      add(rc.rectangle(x - 54 * s, y - 20 * s, 108 * s, 42 * s, o({ stroke: '#B8860B', strokeWidth: 1.4 })));
+      break;
+    case 'townhall':
+      add(rc.rectangle(x - 46 * s, y - 34 * s, 92 * s, 46 * s, o({ fill: '#EAF2FA', fillStyle: 'solid' })));
+      add(rc.polygon([[x - 54 * s, y - 34 * s], [x, y - 62 * s], [x + 54 * s, y - 34 * s]], o({ fill: '#D5DAE1', fillStyle: 'solid' })));
+      for (let i = -2; i <= 2; i++) add(rc.line(x + i * 16 * s, y - 30 * s, x + i * 16 * s, y + 10 * s, o({ strokeWidth: 1.6 })));
+      break;
+    case 'school':
+      add(rc.rectangle(x - 80 * s, y - 40 * s, 160 * s, 60 * s, o({ fill: '#EAF2FA', fillStyle: 'solid' })));
+      add(rc.polygon([[x - 88 * s, y - 40 * s], [x, y - 74 * s], [x + 88 * s, y - 40 * s]], o({ fill: '#D5DAE1', fillStyle: 'solid' })));
+      for (let i = -2; i <= 2; i++) add(rc.rectangle(x + i * 30 * s - 9 * s, y - 28 * s, 18 * s, 16 * s, o({ fill: '#ffffff', fillStyle: 'solid', strokeWidth: 1.2 })));
+      add(rc.rectangle(x - 12 * s, y - 6 * s, 24 * s, 26 * s, o({ fill: '#8a5a2b', fillStyle: 'solid' })));
+      add(rc.line(x, y - 74 * s, x, y - 104 * s, o({ strokeWidth: 1.6 })));
+      add(rc.polygon([[x, y - 104 * s], [x + 26 * s, y - 97 * s], [x, y - 90 * s]], o({ fill: C.green, fillStyle: 'solid', stroke: C.green })));
+      break;
+    case 'computer':
+      add(rc.rectangle(x - 60 * s, y - 70 * s, 120 * s, 80 * s, o({ fill: '#EAF2FA', fillStyle: 'solid', strokeWidth: 2.4 })));
+      add(rc.line(x, y + 10 * s, x, y + 26 * s, o({ strokeWidth: 3 })));
+      add(rc.line(x - 30 * s, y + 28 * s, x + 30 * s, y + 28 * s, o({ strokeWidth: 3 })));
+      break;
+    case 'oldpc':
+      add(rc.rectangle(x - 30 * s, y - 38 * s, 60 * s, 46 * s, o({ fill: '#E6DCCB', fillStyle: 'solid' })));
+      add(rc.rectangle(x - 22 * s, y - 31 * s, 44 * s, 30 * s, o({ fill: '#B9C4B0', fillStyle: 'solid', strokeWidth: 1.2 })));
+      add(rc.rectangle(x - 36 * s, y + 10 * s, 72 * s, 12 * s, o({ fill: '#E6DCCB', fillStyle: 'solid' })));
+      break;
+    case 'sheet':
+      add(rc.rectangle(x - 26 * s, y - 34 * s, 52 * s, 64 * s, o({ fill: '#ffffff', fillStyle: 'solid' })));
+      for (let i = 1; i < 5; i++) add(rc.line(x - 26 * s, y - 34 * s + i * 13 * s, x + 26 * s, y - 34 * s + i * 13 * s, o({ strokeWidth: 1, stroke: C.green })));
+      add(rc.line(x - 6 * s, y - 34 * s, x - 6 * s, y + 30 * s, o({ strokeWidth: 1, stroke: C.green })));
+      break;
+    case 'note':
+      add(rc.rectangle(x - 24 * s, y - 32 * s, 48 * s, 60 * s, o({ fill: '#FFF6C9', fillStyle: 'solid' })));
+      for (let i = 1; i < 5; i++) add(rc.line(x - 16 * s, y - 32 * s + i * 11 * s, x + 16 * s, y - 32 * s + i * 11 * s, o({ strokeWidth: 1, stroke: C.gray })));
+      break;
+    case 'chart':
+      add(rc.rectangle(x - 40 * s, y - 34 * s, 80 * s, 60 * s, o({ fill: '#ffffff', fillStyle: 'solid' })));
+      add(rc.linearPath([[x - 32 * s, y + 14 * s], [x - 14 * s, y - 6 * s], [x + 2 * s, y + 6 * s], [x + 30 * s, y - 22 * s]], o({ stroke: C.blue, strokeWidth: 2.4 })));
+      break;
+    case 'magnifier':
+      add(rc.circle(x, y, 30 * s, o({ fill: '#EAF2FA', fillStyle: 'solid' })));
+      add(rc.line(x + 11 * s, y + 11 * s, x + 26 * s, y + 26 * s, o({ strokeWidth: 4 })));
+      break;
+    case 'flag':
+      add(rc.line(x, y + 20 * s, x, y - 40 * s, o({ strokeWidth: 2 })));
+      add(rc.rectangle(x, y - 40 * s, 54 * s, 26 * s, o({ fill: C.green, fillStyle: 'hachure', hachureGap: 5, stroke: C.green })));
+      break;
+    case 'door':
+      add(rc.rectangle(x - 24 * s, y - 60 * s, 48 * s, 84 * s, o({ fill: '#8a5a2b', fillStyle: 'hachure', hachureGap: 6 })));
+      add(rc.circle(x + 14 * s, y - 16 * s, 6 * s, o({ fill: C.ink, fillStyle: 'solid' })));
+      break;
+    case 'question':
+      text(x, y, '?', { size: 64 * s, bold: true, color: it.color || C.orange, valign: 'middle' });
+      break;
+  }
+  if (it.label) text(x, y + (it.labelDy || 44) * s, it.label, { size: it.labelSize || 20, bold: !!it.labelBold, color: it.labelColor || C.ink, maxW: it.labelW || 200 });
+}
+
+// ---------- ligações ----------
+function quad(p0, p1, curve) {
+  const mx = (p0[0] + p1[0]) / 2, my = (p0[1] + p1[1]) / 2;
+  const dx = p1[0] - p0[0], dy = p1[1] - p0[1], L = Math.hypot(dx, dy) || 1;
+  return [mx - dy / L * curve, my + dx / L * curve];
+}
+function arrowHead(tip, from, color, size) {
+  const a = Math.atan2(tip[1] - from[1], tip[0] - from[0]);
+  for (const s of [-1, 1]) {
+    const b = a + Math.PI + s * 0.45;
+    add(rc.line(tip[0], tip[1], tip[0] + Math.cos(b) * size, tip[1] + Math.sin(b) * size, opts({ stroke: color, strokeWidth: 2.4, roughness: 0.6 })));
+  }
+}
+function link(it) {
+  const p0 = it.from, p1 = it.to, curve = it.curve || 0;
+  const c = quad(p0, p1, curve);
+  const lx = it.labelAt ? it.labelAt[0] : 0.25 * p0[0] + 0.5 * c[0] + 0.25 * p1[0];
+  const ly = it.labelAt ? it.labelAt[1] : 0.25 * p0[1] + 0.5 * c[1] + 0.25 * p1[1];
+  if (it.kind === 'conflict') {
+    const n = it.zig || 9, pts = [];
+    const dx = p1[0] - p0[0], dy = p1[1] - p0[1], L = Math.hypot(dx, dy);
+    for (let i = 0; i <= n; i++) {
+      const t = i / n, amp = (i === 0 || i === n) ? 0 : (i % 2 ? 11 : -11);
+      pts.push([p0[0] + dx * t - dy / L * amp, p0[1] + dy * t + dx / L * amp]);
+    }
+    add(rc.linearPath(pts, opts({ stroke: C.red, strokeWidth: 2.8, roughness: 0.8 })));
+  } else {
+    const color = it.kind === 'hyp' ? C.purple : (it.color || C.ink);
+    const o = opts({ stroke: color, strokeWidth: it.kind === 'hyp' ? 2.2 : 2.6, roughness: 0.9 });
+    if (it.kind === 'hyp') o.strokeLineDash = [11, 9];
+    add(rc.path(`M ${p0[0]} ${p0[1]} Q ${c[0]} ${c[1]} ${p1[0]} ${p1[1]}`, o));
+    if (!it.noHead) arrowHead(p1, c, color, 17);
+    if (it.both) arrowHead(p0, c, color, 17);
+  }
+  if (it.label) {
+    const color = it.kind === 'conflict' ? C.red : it.kind === 'hyp' ? C.purple : C.ink;
+    const lab = it.kind === 'hyp' ? it.label + ' ?' : it.label;
+    const size = it.labelSize || 18;
+    const lines = wrap(lab, size, it.labelW || 170);
+    const w = Math.max(...lines.map(l => measure(l, size))) + 14, h = lines.length * size * 1.15 + 8;
+    el('rect', { x: lx - w / 2, y: ly - h / 2, width: w, height: h, fill: C.paper, opacity: 0.92, rx: 6 });
+    text(lx, ly, lines.join('\n'), { size, color, valign: 'middle', bold: it.kind !== 'fact' });
+  }
+}
+
+// ---------- painel lateral e legenda ----------
+function panel(p) {
+  add(rc.rectangle(p.x, p.y, p.w, p.h, opts({ fill: '#F4F5F7', fillStyle: 'solid', stroke: C.gray, strokeWidth: 1.6, roughness: 0.9 })));
+  text(p.x + 22, p.y + 40, p.title, { size: 26, bold: true, anchor: 'start', color: C.blue });
+  let y = p.y + 78;
+  if (p.next) {
+    text(p.x + 22, y, 'Próxima pergunta mínima', { size: 19, anchor: 'start', color: C.orange, bold: true });
+    y += 8;
+    const r = text(p.x + 22, y + 22, p.next, { size: 21, anchor: 'start', maxW: p.w - 44, bold: true });
+    y += r.height + 34;
+    text(p.x + 22, y, 'Lacunas a confirmar', { size: 19, anchor: 'start', color: C.gray, bold: true });
+    y += 30;
+  }
+  p.items.forEach((q, i) => {
+    text(p.x + 22, y, (i + 1) + '.', { size: 20, anchor: 'start', color: C.gray, bold: true });
+    const r = text(p.x + 46, y, q, { size: 20, anchor: 'start', maxW: p.w - 70 });
+    y += r.height + 12;
+  });
+}
+function legend(l) {
+  const x = l.x, y = l.y;
+  add(rc.rectangle(x, y, l.w || 300, 130, opts({ fill: '#ffffff', fillStyle: 'solid', stroke: C.gray, strokeWidth: 1.2, roughness: 0.7 })));
+  text(x + 16, y + 28, 'Legenda', { size: 20, anchor: 'start', bold: true, color: C.gray });
+  const rows = [['fact', 'informado no enunciado'], ['hyp', 'hipótese a confirmar'], ['conflict', 'conflito ou tensão']];
+  rows.forEach(([k, lab], i) => {
+    const yy = y + 56 + i * 28;
+    link({ from: [x + 18, yy], to: [x + 78, yy], kind: k, noHead: k !== 'fact', zig: 5 });
+    text(x + 92, yy + 6, lab, { size: 19, anchor: 'start' });
+  });
+}
+
+function chat(it) {
+  const { x, y, w, h } = it;
+  add(rc.rectangle(x, y, w, h, opts({ fill: '#ffffff', fillStyle: 'solid', stroke: C.blue, strokeWidth: 2.2, roughness: 0.8 })));
+  add(rc.rectangle(x, y, w, 52, opts({ fill: '#EAF2FA', fillStyle: 'solid', stroke: C.blue, strokeWidth: 2.2, roughness: 0.8 })));
+  text(x + 20, y + 35, it.title, { size: 24, anchor: 'start', bold: true, color: C.blue });
+  let yy = y + 78;
+  for (const m of it.msgs) {
+    const size = 21, bw = w * 0.72, pad = 12;
+    const lines = wrap(m.text, size, bw - 2 * pad);
+    const bh = lines.length * size * 1.15 + 2 * pad;
+    const bx = m.me ? x + w - bw - 18 : x + 18;
+    add(rc.rectangle(bx, yy, bw, bh, opts({ fill: m.me ? '#EEF6E4' : '#FEF1E4', fillStyle: 'solid', stroke: m.me ? C.green : C.orange, strokeWidth: 1.6, roughness: 0.9 })));
+    text(bx + pad, yy + pad + size * 0.85, lines.join('\n'), { size, anchor: 'start' });
+    yy += bh + 16;
+  }
+}
+
+function draw() {
+  svg.setAttribute('width', SPEC.w); svg.setAttribute('height', SPEC.h);
+  svg.setAttribute('viewBox', `0 0 ${SPEC.w} ${SPEC.h}`);
+  el('rect', { x: 0, y: 0, width: SPEC.w, height: SPEC.h, fill: C.paper });
+  rc = rough.svg(svg);
+  if (SPEC.title) text(SPEC.titleX || 40, SPEC.titleY || 62, SPEC.title, { size: SPEC.titleSize || 44, anchor: 'start', bold: true });
+  if (SPEC.subtitle) text(SPEC.titleX || 40, (SPEC.titleY || 62) + 40, SPEC.subtitle, { size: 23, anchor: 'start', color: C.gray });
+  const order = { paper: -1, zone: 0, river: 1, icon: 2, cloud: 3, link: 4, box: 5, people: 6, bubble: 7, text: 8, chat: 9 };
+  const items = (SPEC.items || []).slice().sort((a, b) => (order[a.t] ?? 5) - (order[b.t] ?? 5));
+  for (const it of items) {
+    if (it.t === 'people') people(it);
+    else if (it.t === 'bubble') bubble(it);
+    else if (it.t === 'cloud') cloud(it);
+    else if (it.t === 'box' || it.t === 'paper') box(it);
+    else if (it.t === 'zone') zone(it);
+    else if (it.t === 'river') river(it);
+    else if (it.t === 'icon') icon(it);
+    else if (it.t === 'link') link(it);
+    else if (it.t === 'chat') chat(it);
+    else if (it.t === 'text') text(it.x, it.y, it.text, it);
+  }
+  if (SPEC.panel) panel(SPEC.panel);
+  if (SPEC.legend) legend(SPEC.legend);
+  if (SPEC.footer) text(40, SPEC.h - 22, SPEC.footer, { size: 18, anchor: 'start', color: C.gray });
+  document.body.setAttribute('data-done', '1');
+}
+document.fonts.load('20px "Patrick Hand"').then(() => document.fonts.ready).then(draw);
+</script>
+</body>
+</html>

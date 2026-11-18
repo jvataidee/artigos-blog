@@ -1,0 +1,2 @@
+# Requer o ArcGIS Pro com o pacote arcgis.learn (arcgis, fastai e PyTorch). As demais bibliotecas vêm no ambiente de deep learning do ArcGIS.
+pandas>=2.0

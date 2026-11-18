@@ -1,0 +1,77 @@
+{
+  "Planetary Computer": {
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1",
+    "colecao": "sentinel-2-l2a",
+    "itens": 7,
+    "datas": [
+      "2025-03-22",
+      "2025-03-24",
+      "2025-04-16",
+      "2025-11-07",
+      "2025-11-12"
+    ],
+    "assets_exemplo": [
+      "AOT",
+      "B01",
+      "B02",
+      "B03",
+      "B04",
+      "B05",
+      "B06",
+      "B07",
+      "B08",
+      "B09",
+      "B11",
+      "B12",
+      "B8A",
+      "SCL",
+      "WVP",
+      "datastrip-metadata",
+      "granule-metadata",
+      "inspire-metadata",
+      "product-metadata",
+      "rendered_preview",
+      "safe-manifest",
+      "tilejson",
+      "visual"
+    ]
+  },
+  "Earth Search": {
+    "url": "https://earth-search.aws.element84.com/v1",
+    "colecao": "sentinel-2-c1-l2a",
+    "itens": 7,
+    "datas": [
+      "2025-03-22",
+      "2025-03-24",
+      "2025-04-16",
+      "2025-11-07",
+      "2025-11-12"
+    ],
+    "assets_exemplo": [
+      "aot",
+      "blue",
+      "cloud",
+      "coastal",
+      "granule_metadata",
+      "green",
+      "nir",
+      "nir08",
+      "nir09",
+      "preview",
+      "product_metadata",
+      "red",
+      "rededge1",
+      "rededge2",
+      "rededge3",
+      "scl",
+      "snow",
+      "swir16",
+      "swir22",
+      "thumbnail",
+      "tileinfo_metadata",
+      "visual",
+      "wvp"
+    ]
+  },
+  "datas_em_comum": 5
+}

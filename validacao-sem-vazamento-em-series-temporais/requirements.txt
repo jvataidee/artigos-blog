@@ -1,0 +1,8 @@
+numpy==2.2.6
+pandas==2.3.3
+scikit-learn==1.7.2
+matplotlib==3.10.7
+rasterio==1.4.4
+pystac-client==0.8.6
+planetary-computer==1.0.0
+requests==2.34.2

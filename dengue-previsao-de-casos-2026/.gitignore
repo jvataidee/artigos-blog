@@ -1,0 +1,19 @@
+resultados_p*/
+# só o código necessário para rerodar sobe para o GitHub
+dados/
+imagens/
+descartadas/
+fig/
+imagens_do_trabalho/
+resultados/
+resultados_v1/
+figuras.py
+trechos.py
+trechos_saida.txt
+*_v1.py
+protocolo.md
+*.log
+catboost_info/
+__pycache__/
+.env
+run_p*.log

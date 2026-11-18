@@ -1,0 +1,50 @@
+{
+  "item": "S2B_MSIL2A_20250416T124249_R009_T25MBM_20250416T160533",
+  "arquivo_mb": 262.9,
+  "largura": 10980,
+  "altura": 10980,
+  "dtype": "uint16",
+  "crs": "EPSG:32725",
+  "bloco": [
+    512,
+    512
+  ],
+  "overviews": [
+    2,
+    4,
+    8,
+    16
+  ],
+  "compressao": "deflate",
+  "blocos_total": 484,
+  "cabecalho": {
+    "kb": 4.9,
+    "requisicoes": 112
+  },
+  "janela_recife": {
+    "px": [
+      1774,
+      2221
+    ],
+    "pct_area": 3.27,
+    "mb": 8.4,
+    "pct_arquivo": 3.2,
+    "requisicoes": 134,
+    "segundos": 42.4,
+    "media_nd": 1901.379595305039
+  },
+  "overview_16": {
+    "px": [
+      686,
+      686
+    ],
+    "mb": 0.81,
+    "pct_arquivo": 0.31,
+    "requisicoes": 118,
+    "segundos": 24.8
+  },
+  "gdal_nativo_segundos": {
+    "janela_recife": 6.6,
+    "overview_16": 1.4
+  }
+}
